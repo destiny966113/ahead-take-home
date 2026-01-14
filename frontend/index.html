@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OMIP File Processor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-circle">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+      </div>
+      <h1 class="sidebar-title">OMIP<br>File Processor</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="processor">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        </svg>
+        <span>Processor</span>
+      </button>
+      <button class="nav-item" data-tab="post">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <span>Post-Process</span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h2 class="page-title" id="pageTitle">File Processor</h2>
+      </div>
+      <div class="header-right">
+        <div class="stats-group">
+          <div class="stat-badge">
+            <span class="stat-value" id="statTotal">0</span>
+            <span class="stat-label">Total</span>
+          </div>
+          <div class="stat-badge success">
+            <span class="stat-value" id="statSuccess">0</span>
+            <span class="stat-label">Success</span>
+          </div>
+          <div class="stat-badge failed">
+            <span class="stat-value" id="statFailed">0</span>
+            <span class="stat-label">Failed</span>
+          </div>
+        </div>
+        <div class="role-selector">
+          <label>Role</label>
+          <select id="role">
+            <option value="viewer">Viewer</option>
+            <option value="annotator" selected>Annotator</option>
+            <option value="reviewer">Reviewer</option>
+          </select>
+        </div>
+        <div class="user-badge">ADM</div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+      <!-- Processor Tab -->
+      <section id="tab-processor" class="tab active">
+        <div class="content-grid">
+          <!-- Left Column -->
+          <div class="content-col">
+            <!-- Upload Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Upload PDF Files</h3>
+              </div>
+              <div class="card-content">
+                <div class="dropzone" id="dropZone">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <p class="dropzone-title">Drop PDF files here</p>
+                  <p class="dropzone-subtitle">or click to browse</p>
+                </div>
+                <input id="files" type="file" multiple accept=".pdf" hidden />
+                <div class="button-group">
+                  <button class="btn btn-outline" id="btnSelectFiles">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    Select Files
+                  </button>
+                  <button class="btn btn-primary" id="btnUpload">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Upload
+                  </button>
+                </div>
+                <div id="uploadResult" class="result-log"></div>
+              </div>
+            </div>
+
+            <!-- Library Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Library (Uploaded Files)</h3>
+                <button class="btn btn-sm btn-outline" id="btnLoadLibrary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+              <div class="card-content">
+                <div class="table-actions">
+                  <div class="selection-info" id="selectionInfo" style="display:none;">
+                    <span id="selectionCount">0</span> selected
+                  </div>
+                  <div class="button-group">
+                    <button class="btn btn-sm btn-outline" id="btnSelectAll">Select All</button>
+                    <button class="btn btn-sm btn-primary" id="btnParseSelected">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      Parse Selected
+                    </button>
+                    <button class="btn btn-sm btn-danger" id="btnDeleteSelected">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                      Delete
+                    </button>
+                    <button class="btn btn-sm btn-danger" id="btnDeleteAll" title="Delete all papers (danger)">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                      Delete All
+                    </button>
+                  </div>
+                </div>
+                <div class="table-container">
+                  <table id="libraryTable" class="data-table"></table>
+                </div>
+                <div class="table-actions" style="margin-top:12px;">
+                  <div id="libPageInfo">Page 1</div>
+                  <div class="button-group">
+                    <button class="btn btn-sm btn-outline" id="libPrev">Prev</button>
+                    <button class="btn btn-sm btn-outline" id="libNext">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="content-col">
+            <!-- Batch Progress Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Batch Progress</h3>
+                <button class="btn btn-sm btn-outline" id="btnPoll">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+              <div class="card-content">
+                <div class="form-group">
+                  <label>Batch ID</label>
+                  <input id="batchId" readonly placeholder="No active batch" />
+                </div>
+                <div class="progress-bar">
+                  <div id="progBar" class="progress-fill"></div>
+                </div>
+                <div id="batchProgress" class="result-log"></div>
+
+                <h4 class="section-title">Recent Runs (History)</h4>
+                <div class="table-container">
+                  <table id="runsTable" class="data-table"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Post-Processing Tab -->
+      <section id="tab-post" class="tab">
+        <div class="content-grid">
+          <!-- Left Column -->
+          <div class="content-col">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Processed Items</h3>
+                <button class="btn btn-sm btn-outline" id="btnExportJson">Export JSON</button>
+                <button class="btn btn-sm btn-outline" id="btnExportParquet">Export Parquet</button>
+                <button class="btn btn-sm btn-outline" id="btnLoadProcessed">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+              <div class="card-content">
+                <div class="table-container">
+                  <table id="processedTable" class="data-table"></table>
+                </div>
+                <div class="table-actions" style="margin-top:12px;">
+                  <div id="procPageInfo">Page 1</div>
+                  <div class="button-group">
+                    <button class="btn btn-sm btn-outline" id="procPrev">Prev</button>
+                    <button class="btn btn-sm btn-outline" id="procNext">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="content-col">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Review (Raw PARSER JSON)</h3>
+              </div>
+              <div class="card-content">
+                <div class="form-group">
+                  <label>Paper ID</label>
+                  <div class="input-group">
+                    <input id="paperIdDraft" placeholder="Enter paper UUID" />
+                    <button class="btn btn-outline" id="btnLoadGrobid">Load PARSER JSON</button>
+                  </div>
+                </div>
+                <div class="hint" style="margin-top: 4px; color: var(--muted-foreground); font-size: 12px;">
+                  Shows the stored parse in OMIP JSON shape (matches test.omip.json)
+                </div>
+
+                <div class="toolbar" style="display:flex; gap:8px; margin-top:12px; align-items:center;">
+                  <input id="runId" placeholder="Run UUID" style="flex:1;" />
+                  <select id="versionSelect" style="max-width:200px; display:none;"></select>
+                  <button class="btn btn-outline" id="btnEditJson">Edit JSON</button>
+                  <button class="btn btn-outline" id="btnCancelJson" style="display:none;">Cancel</button>
+                  <button class="btn btn-primary" id="btnSaveJson" style="display:none;">Save</button>
+                  <button class="btn btn-success" id="btnApprove">Approve</button>
+                  <button class="btn btn-danger" id="btnReject">Reject</button>
+                </div>
+
+                <div id="draftView" class="result-log" style="margin-top: 12px;"></div>
+
+                <textarea id="jsonEditor"
+                  style="display:none; width:100%; min-height:280px; font-family: ui-monospace, Menlo, Monaco, monospace; font-size:12px; line-height:1.4; margin-top:12px;"></textarea>
+
+                <!-- Rendered PARSER Summary -->
+                <div id="grobidPreview" class="card" style="margin-top:12px; display:none;">
+                  <div class="card-header">
+                    <h3 class="card-title">PARSER Summary</h3>
+                  </div>
+                  <div class="card-content">
+                    <div id="grobidSummary"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <small>v0.2 — File Processor with Batch Parsing & HITL Review</small>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+
+</html>

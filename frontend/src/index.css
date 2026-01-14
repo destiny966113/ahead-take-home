@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Golden/Amber themed SaaS dashboard */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Golden/Amber Sidebar Theme */
+    --sidebar-gold: 40 85% 55%;
+    --sidebar-gold-light: 40 80% 60%;
+    --sidebar-gold-dark: 40 90% 45%;
+    --sidebar-text: 0 0% 100%;
+    --sidebar-text-muted: 40 20% 95%;
+
+    /* Core Colors */
+    --background: 40 20% 98%;
+    --foreground: 220 15% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 20%;
+
+    /* Primary - Golden Accent */
+    --primary: 40 85% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Neutral Gray */
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 30%;
+
+    --muted: 220 10% 94%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Accent - Teal/Green for links */
+    --accent: 160 50% 30%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Status Colors */
+    --success: 145 60% 45%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 145 60% 92%;
+
+    --warning: 40 90% 50%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 40 90% 92%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --destructive-light: 0 70% 95%;
+
+    /* VIP Badge - Coral/Pink */
+    --vip: 350 75% 60%;
+    --vip-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 40 85% 55%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar specific */
+    --sidebar-background: 40 85% 55%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 40 85% 55%;
+    --sidebar-accent: 40 90% 48%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 40 70% 50%;
+    --sidebar-ring: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 20% 13%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 20% 13%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 40 85% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 220 10% 90%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 160 50% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 40 85% 55%;
+
+    --sidebar-background: 40 80% 45%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 40 85% 55%;
+    --sidebar-accent: 40 85% 38%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 40 70% 40%;
+    --sidebar-ring: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+
+  /* Status badge variants */
+  .status-badge {
+    @apply inline-flex items-center justify-center px-2.5 py-0.5 rounded text-xs font-medium;
+  }
+
+  .status-complete {
+    @apply bg-muted text-muted-foreground;
+  }
+
+  .status-progress {
+    @apply text-success bg-success-light;
+  }
+
+  .status-failed {
+    @apply text-destructive bg-destructive-light;
+  }
+
+  /* Golden sidebar styles */
+  .sidebar-nav-item {
+    @apply flex flex-col items-center gap-1 py-3 px-4 rounded-lg transition-all duration-200;
+  }
+
+  .sidebar-nav-item.active {
+    @apply bg-sidebar-accent;
+  }
+
+  .sidebar-nav-item:hover:not(.active) {
+    @apply bg-sidebar-accent/50;
+  }
+
+  /* Card elevation */
+  .card-elevated {
+    @apply bg-card rounded-lg border border-border shadow-sm;
+  }
+
+  /* Table row hover */
+  .table-row-hover {
+    @apply hover:bg-muted/50 transition-colors;
+  }
+
+  /* Upload dropzone */
+  .dropzone {
+    @apply border-2 border-dashed border-muted-foreground/30 rounded-lg p-8 text-center transition-colors;
+  }
+
+  .dropzone:hover,
+  .dropzone.active {
+    @apply border-primary bg-primary/5;
+  }
+}
+
+@layer utilities {
+  .text-link {
+    @apply text-accent hover:text-accent/80 font-medium underline-offset-4 hover:underline transition-colors cursor-pointer;
+  }
+}
