@@ -9,28 +9,28 @@ docker compose up
 啟動後可前往前端 http://localhost:8088 測試頁面
 
 ## 選擇檔案並上傳
-![alt text](image.png)
+![alt text](images/image.png)
 
 ## 勾選並開始解析
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 ## 查看進度狀態
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 ## 支持進度追蹤、錯誤重試等機制
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ## 解析結果範例
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 ## 編輯與歷史版本選擇
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 ## 通過審核終版可下載
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 ## 同一份文件可以重複解析彼此之間獨立
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
 ---
 
